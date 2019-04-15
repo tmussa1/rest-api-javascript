@@ -1,0 +1,54 @@
+doctype
+html( lang="en" )
+    head
+        title Clothing Store Catalogue
+        meta( charset='utf-8' )
+        meta( http-equiv='X-UA-Compatible', content='IE=edge' )
+        meta( name='viewport', content='width=device-width, initial-scale=1.0' )
+        meta( name='description', content='Clothing Store with Jade' )
+        link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css", rel="stylesheet")
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body(style="padding-bottom:10rem;")
+        nav.navbar.navbar-default( role="navigation" )
+            .navbar-header
+                button.navbar-toggle.collapsed( type="button", data-toggle="collapse", data-target="#navbar-inverse", aria-expanded="false", aria-controls="navbar")
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href="#") The Number 1 Clothing Store 
+        #navbar-inverse.collapse.navbar-collapse
+            ul.nav.navbar-nav
+                li.active: a( href="/") Home
+                li: a( href="/products" ) Add Products
+        h4.titlePage Please add items to the catalogue
+        <br/>
+        .rowform
+            .col-md-12
+                form(method='POST' action='/products/addProduct' enctype='multipart/form-data')
+                    .input
+                        label(for="name") Product Name:
+                        input#productName.form-control(type="text", name="name")
+                    .input
+                        label(for="price") Price:
+                        input#price.form-control(type="text", name="price")
+                    .input
+                        label(for="description") Desription:
+                        input#description.form-control(type="text", name="description")
+                    .input
+                        label(for="imageUrl") Upload Image:
+                        input#imageUrl.form-control(type="file", name="imageUrl")
+                    <br/>
+                    .actions
+                        input#Add.btn.btn-primary(type="submit", value="Add Product")
+        <br/>
+        ul.list-group
+            each product in listOfProducts
+                .row 
+                    li.list-group-item.col-md-2.productName= product.name 
+                    li.list-group-item.col-md-2= product.description
+                    li.list-group-item.col-md-2= product.price
+                    .img 
+                        image(src = product.imageUrl height="40" width="40" alt="Image doesn't exist")
+        script( src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' )
+        script( src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js' )

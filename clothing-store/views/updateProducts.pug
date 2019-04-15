@@ -1,0 +1,45 @@
+doctype
+html( lang="en" )
+    head
+        title Clothing Store Homepage
+        meta( charset='utf-8' )
+        meta( http-equiv='X-UA-Compatible', content='IE=edge' )
+        meta( name='viewport', content='width=device-width, initial-scale=1.0' )
+        meta( name='description', content='Clothing Store with Jade' )
+        link(href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css", rel="stylesheet")
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body(style="padding-bottom:10rem;")
+        nav.navbar.navbar-default( role="navigation" )
+            .navbar-header
+                button.navbar-toggle.collapsed( type="button", data-toggle="collapse", data-target="#navbar-inverse", aria-expanded="false", aria-controls="navbar")
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href="#") The Number 1 Clothing Store 
+ 
+        #navbar-inverse.collapse.navbar-collapse
+            ul.nav.navbar-nav
+                li.active: a( href="/") Home
+                li: a( href="/products" ) Add Products
+        <br/>
+        .row
+            .col-md-6
+                form(method='POST' action="/products/edit/"+product._id)
+                    .input
+                        input#id.form-control(type="hidden", value=product._id name="_id")
+                    .input
+                        label(for="name") Product Name:
+                        input#productName.form-control(type="text", value=product.name name="name")
+                    .input
+                        label(for="price") Price:
+                        input#price.form-control(type="text", value=product.price name="price")
+                    .input
+                        label(for="description") Desription:
+                        input#description.form-control(type="text", value=product.description name="description")
+                    <br/>
+                    .actions
+                        input#Add.btn.btn-primary(type="submit", value="Update Product")
+        <br/>
+        script( src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' )
+        script( src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js' )
