@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
 var indexRouter = require('./routes/index');
-var productsRouter = require('./routes/productsRouter');
+var productsRouter = require('./routes/productsAPI');
 var app = express();
 
 var mongoose= require('mongoose');

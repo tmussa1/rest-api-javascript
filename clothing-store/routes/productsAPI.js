@@ -6,6 +6,20 @@ var Product = require('../model/products.js');
 var productController = require('../controller/productController.js');
 var ProductService = productController.ProductService;
 
+
+router.use((req,res,next)=>{
+    res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers',
+        'Content-Type':'application/json'
+    })
+    if (req.method == 'OPTIONS'){
+        return res.status(200).end();
+      }
+    next();
+});
+
 //Get all products
 router.get('/', (req, res, next) =>{
     ProductService.listProducts()
