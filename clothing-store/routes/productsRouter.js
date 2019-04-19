@@ -3,18 +3,19 @@ var upload = multer({dest : 'public/images'})
 var express = require('express');
 var router = express.Router();
 var Product = require('../model/products.js');
+var productController = require('../controller/productController.js');
+var ProductService = productController.ProductService;
 
 //Get all products
 router.get('/', (req, res, next) =>{
-    Product.find({}, (err, products)=>{
-        if(err) {
-            res.send(err);
-        }
-    res.render('products', {listOfProducts : products});
+    ProductService.listProducts()
+    .then((products) =>{
+        res.status(200);
+        res.json(products);
     });
 });
 
-//Add a new product
+//Create a new product
 router.post('/addProduct', upload.single('imageUrl'), (req, res, next)=>{
     
     var name  = req.body.name;
@@ -29,63 +30,62 @@ router.post('/addProduct', upload.single('imageUrl'), (req, res, next)=>{
         imageUrl: imageUrl
     });
 
-    newProduct.save(function(err){
-        if(err){
-            console.error.bind(err);
-        } 
-        res.redirect('/products/');
+    ProductService.createProduct(newProduct)
+    .then((product)=>{
+        res.status(201);
+        res.json(product);
+    }).catch((err) => {
+        res.send(JSON.stringify(err));
     });
 });
 
-//Get by name
-router.get('/:name', (req, res, next) =>{
-    var name = req.params.name;
-
-    Product.findOne({name : name}, (err, product)=>{
-        if(err) {
-            console.log(err);
-        }
-        res.render('details', {product: product});
-    });
+//Get by id
+router.get('/:product_id', (req, res, next) =>{
+    var id = req.params.product_id;
+    return ProductService.getAProduct(id)
+        .then((product) =>{
+            res.status(200);
+            res.json(product);
+        })
 });
 
 //Update Product
-router.get('/edit/:product_id', (req, res, next) =>{
+router.put('/:product_id', upload.single('imageUrl'), (req, res, next) =>{
     var product_id = req.params.product_id;
 
-    Product.findOne({_id : product_id}, (err, product)=>{
-        if(err) {
-            console.log(err);
-        }
-        res.render('updateProducts', {product: product});
+    var name  = req.body.name;
+    var price = parseInt(req.body.price);
+    var description = req.body.description;
+    var imageUrl = "/static/images/" + req.file.filename;
+
+    var newProduct = new Product({
+        _id : product_id,
+        name: name,
+        price: price,
+        description: description,
+        imageUrl: imageUrl
+    });
+
+    ProductService.updateAProduct(product_id, newProduct)
+    .then(product =>{
+        res.status(200);
+        res.json(product);
+    }).catch((err)=>{
+        res.send(JSON.stringify(err));
     });
 });
 
-//Update product
-router.post('/edit/:product_id', (req, res, next)=>{
-    Product.findOne({_id: req.params.product_id})
-      .then((product)=>{
-        var updated  = {
-           name: req.body.name,
-           description: req.body.description,
-           price: req.body.price
-           }
-        product.set(updated);
-        product.save((err)=>{
-          if(err){
-              console.log(err);
-          }
-          res.redirect('/products/');
-        });
-      })
-  });
+//Delete a product
+  router.delete('/:product_id', (req, res, next)=>{
 
-  router.get('/delete/:product_id', (req, res, next)=>{
-    Product.deleteOne({_id: req.params.product_id}, function(err){
-        if(err){
-            console.log(err);
-        }
-        res.redirect('/');
+    var id = req.params.product_id;
+
+    ProductService.deleteAProduct(id)
+    .then((product)=>{
+        res.status(200);
+        res.json(product);
+    }).catch((err) =>{
+        res.send(JSON.stringify(err));
     });
   });
 
