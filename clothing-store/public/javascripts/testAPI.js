@@ -22,27 +22,24 @@
         product.append('description', document.querySelector('#description').value);
         product.append('imageUrl', document.querySelector('input[type="file"]').files[0]);
         
-        console.log("Creating a product");
-        console.log(product.getAll("name"));
-        console.log(product.getAll("price"));
-        console.log(product.getAll("description"));
-        console.log(product.getAll("imageUrl"));
+        console.log("Creating a product ", product.getAll("name"));
+    
         return makeAPICall('POST', '/products/addProduct', product)
     }
 
     function getAProduct(id){
-        console.log("Getting a single product");
+        console.log("Getting a single product with id ", id);
         
         return makeAPICall('GET', '/products/' + id, {});
     }
 
     function updateAProduct(id, product){
-        console.log("Updating a product");
+        console.log("Updating a product with id ", id, "and name", product.name);
         return makeAPICall('PUT', '/products/'+ id, product);
     }
 
     function deleteAProduct(id){
-        console.log("Deleting a product");
+        console.log("Deleting a product with id ", id);
         return makeAPICall('DELETE', '/products/' + id);
     }
 
@@ -58,7 +55,7 @@
         if(method == 'POST'){
             fetchOptions.body = payload;
         } else if(method == 'PUT'){
-            fetchOptions.headers = {'Content-type' : 'application/json'};
+            fetchOptions.headers = {'Content-Type' : 'application/json'};
             fetchOptions.body = JSON.stringify(payload);
         } 
 

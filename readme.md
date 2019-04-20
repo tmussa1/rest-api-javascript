@@ -1,5 +1,11 @@
 # Assignment #5 - REST APIs
 
-The description of this assignment can be found in Canvas at [Assignment #5](https://canvas.harvard.edu/courses/54354/assignments/249114) (Spring 2019)
+This assignment performs all four CRUD operations. I have tested them using PostMan and clientside Javascript that I included, testAPI.js. To test the API, you need to click on the TEST API button testAPI.html and this actions will be performed in order.
 
-You should build your application in this repo cloned for you in Github Classroom. You'll submit your project and github URLs in Canvas.
+1) Listing the items in the database
+2) Creating a product
+3) Retreiving the product that was just created
+4) Updating some of the fields in the product
+5) Finally, deleting the product
+
+
