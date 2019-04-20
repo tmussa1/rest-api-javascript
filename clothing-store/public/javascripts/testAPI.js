@@ -16,11 +16,11 @@
         return makeAPICall('GET', '/products/', {});
     }
     function createProduct(){
-        var product = {};
-        product.name = document.querySelector('#name');
-        product.price = document.querySelector('#price');
-        product.description = document.querySelector('#description');
-        product.imageUrl = "/static/images/" + document.querySelector('input[type="file"]').files[0];
+        var product = new FormData();
+        product.append('name' , document.querySelector('#name'));
+        product.append('price', document.querySelector('#price'));
+        product.append('description' , document.querySelector('#description'));
+        product.append('imageUrl' , document.querySelector('input[type="file"]').files[0]);
         
         console.log("Creating a product");
 
@@ -61,7 +61,7 @@
         let result = fetch(path, fetchOptions)
             .then((response) => {
                 console.log("Response status", response.status, response.headers.get('Content-Type'));
-                return response.json();
+                return response;
             }).catch((err) =>{
                 console.log(err);
             });
