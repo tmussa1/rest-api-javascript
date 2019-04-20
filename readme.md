@@ -8,4 +8,18 @@ This assignment performs all four CRUD operations. I have tested them using Post
 4) Updating some of the fields in the product
 5) Finally, deleting the product
 
+testAPI.html form
+
+![form] (https://github.com/HarvardDCENode/assignment-5-tmussa1/blob/master/clothing-store/views/READMEImages/form.PNG)
+
+Console output
+
+![console] (https://github.com/HarvardDCENode/assignment-5-tmussa1/blob/master/clothing-store/views/READMEImages/console.PNG)
+
+![Networktab] (https://github.com/HarvardDCENode/assignment-5-tmussa1/blob/master/clothing-store/views/READMEImages/network.PNG)
+
+
+
+
+
 
