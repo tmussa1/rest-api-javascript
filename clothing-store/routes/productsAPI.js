@@ -69,7 +69,6 @@ router.put('/:product_id', (req, res, next) =>{
     var name  = req.body.name;
     var price = parseInt(req.body.price);
     var description = req.body.description;
-    //var imageUrl = "/static/images/" + req.file.filename;
 
     var newProduct = new Product({
         name: name,
