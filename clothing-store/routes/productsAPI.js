@@ -66,6 +66,10 @@ router.get('/:product_id', (req, res, next) =>{
 //Update Product
 router.put('/:product_id', upload.single('imageUrl'), (req, res, next) =>{
     var product_id = req.params.product_id;
+    console.log(req.body.imageUrl);
+    console.log("Product Id " + product_id);
+
+    res.send({"status" : "Updated"});
 
     var name  = req.body.name;
     var price = parseInt(req.body.price);
@@ -73,13 +77,14 @@ router.put('/:product_id', upload.single('imageUrl'), (req, res, next) =>{
     var imageUrl = "/static/images/" + req.file.filename;
 
     var newProduct = new Product({
-        _id : product_id,
-        name: name,
-        price: price,
-        description: description,
-        imageUrl: imageUrl
+        "_id" : product_id,
+        "name" : name,
+        "price" : price,
+        "description" : description,
+        "imageUrl" : imageUrl
     });
 
+   
     ProductService.updateAProduct(product_id, newProduct)
     .then(product =>{
         res.status(200);

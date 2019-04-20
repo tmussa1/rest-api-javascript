@@ -17,13 +17,16 @@
     }
     function createProduct(){
         var product = new FormData();
-        product.append('name' , document.querySelector('#name'));
-        product.append('price', document.querySelector('#price'));
-        product.append('description' , document.querySelector('#description'));
-        product.append('imageUrl' , document.querySelector('input[type="file"]').files[0]);
+        product.append('name' , document.querySelector('#name').value);
+        product.append('price', document.querySelector('#price').value);
+        product.append('description', document.querySelector('#description').value);
+        product.append('imageUrl', document.querySelector('input[type="file"]').files[0]);
         
         console.log("Creating a product");
-
+        console.log(product.getAll("name"));
+        console.log(product.getAll("price"));
+        console.log(product.getAll("description"));
+        console.log(product.getAll("imageUrl"));
         return makeAPICall('POST', '/products/addProduct', product)
     }
 
@@ -35,7 +38,7 @@
 
     function updateAProduct(id, product){
         console.log("Updating a product");
-        return makeAPICall('PUT', '/products/' + id, product);
+        return makeAPICall('PUT', '/products/'+ id, product);
     }
 
     function deleteAProduct(id){
@@ -45,28 +48,29 @@
 
     function makeAPICall(method, route, payload){
         
-        var path = baseUri + route;
+        let path = baseUri + route;
 
-        var fetchOptions = {};
+        let fetchOptions = {};
 
         fetchOptions.method = method;
-        fetchOptions.headers = {'Content-Type' : 'application/json'};
+        
 
         if(method == 'POST'){
             fetchOptions.body = payload;
         } else if(method == 'PUT'){
+            fetchOptions.headers = {'Content-type' : 'application/json'};
             fetchOptions.body = JSON.stringify(payload);
         } 
 
         let result = fetch(path, fetchOptions)
             .then((response) => {
                 console.log("Response status", response.status, response.headers.get('Content-Type'));
-                return response;
+                return response.json();
             }).catch((err) =>{
                 console.log(err);
             });
-        return result;
+       return result;
     }
 
-    document.getElementById("test_api").onclick = testAPIs();
+    document.getElementById("test_api").onclick = testAPIs;
 })();
