@@ -43,6 +43,13 @@ class ProductService{
         })
     }
 
+    static deleteAllProducts(){
+        return Product.deleteMany({})
+        .then((products)=>{
+            return products;
+        })
+    }
+
 }
 
 module.exports.ProductService = ProductService;

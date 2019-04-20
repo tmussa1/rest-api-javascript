@@ -1,5 +1,5 @@
 var multer = require('multer');
-var upload = multer({dest : 'public/images'})
+var upload = multer({dest : 'uploads/images'})
 var express = require('express');
 var router = express.Router();
 var Product = require('../model/products.js');
@@ -35,7 +35,7 @@ router.post('/addProduct', upload.single('imageUrl'), (req, res, next)=>{
     var name  = req.body.name;
     var price = parseInt(req.body.price);
     var description = req.body.description;
-    var imageUrl = "/static/images/" + req.file.filename;
+    var imageUrl = "/uploads/images/" + req.file.filename;
 
     var newProduct = new Product({
         name: name,
@@ -94,6 +94,18 @@ router.put('/:product_id', (req, res, next) =>{
     .then((product)=>{
         res.status(200);
         res.json(product);
+    }).catch((err) =>{
+        res.send(JSON.stringify(err));
+    });
+  });
+
+  //Delete all
+  router.delete('/', (req,res, next)=>{
+
+    ProductService.deleteAllProducts()
+    .then((products)=>{
+        res.status(200);
+        res.json(products);
     }).catch((err) =>{
         res.send(JSON.stringify(err));
     });

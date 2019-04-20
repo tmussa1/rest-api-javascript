@@ -8,10 +8,7 @@ var indexRouter = require('./routes/index');
 var productsRouter = require('./routes/productsAPI');
 
 var bodyParser = require('body-parser');
-
-
 var app = express();
-
 var mongoose= require('mongoose');
 
 mongoose.connect(`mongodb+srv://${process.env.db_user_name}:${process.env.db_password}@cluster0-skahm.mongodb.net/clothing-store-db?retryWrites=true`, {useNewUrlParser: true});
@@ -28,7 +25,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/static' , express.static(path.join(__dirname, 'public')));
+app.use('/uploads' , express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
